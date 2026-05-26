@@ -3,108 +3,1079 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-  <title>Kingdom Kids Games</title>
+  <title>Kingdom Typer</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet"/>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Nunito', sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(160deg, #1a1a2e 0%, #2d1b00 100%);
-      display: flex; flex-direction: column; align-items: center;
-      padding: 32px 16px 48px; color: #fff;
-    }
-    .crown { font-size: 52px; margin-bottom: 4px; animation: float 3s ease-in-out infinite; }
-    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-    .title {
-      font-family: 'Fredoka One', cursive; font-size: 38px; letter-spacing: 2px;
-      background: linear-gradient(135deg, #f7971e, #ffd200);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      text-align: center; margin-bottom: 4px;
-    }
-    .subtitle { font-size: 13px; color: #aaa; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 32px; text-align: center; }
-
-    .cards { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 18px; }
-
-    .game-card {
-      border-radius: 22px; padding: 22px 20px; cursor: pointer;
-      display: flex; align-items: center; gap: 18px;
-      transition: transform 0.15s, box-shadow 0.15s;
-      text-decoration: none; color: inherit;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
-    }
-    .game-card:active { transform: scale(0.97); }
-    .game-card.xo { background: linear-gradient(135deg, #1a1a2e, #0f3460); border: 2px solid #f7971e44; }
-    .game-card.solo { background: linear-gradient(135deg, #0d0d1a, #1a0a3e); border: 2px solid #a855f744; }
-    .game-card.bible { background: linear-gradient(135deg, #1a0e00, #2d1b00); border: 2px solid #ffd20044; }
-
-    .card-icon { font-size: 52px; flex-shrink: 0; }
-    .card-info { flex: 1; }
-    .card-title { font-family: 'Fredoka One', cursive; font-size: 24px; margin-bottom: 3px; }
-    .card-title.xo { color: #ffd200; }
-    .card-title.solo { color: #c084fc; }
-    .card-title.bible { color: #ffd200; }
-    .card-desc { font-size: 13px; color: #aaa; line-height: 1.4; }
-    .card-tag { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .tag-xo { background: #f7971e22; color: #f7971e; border: 1px solid #f7971e44; }
-    .tag-solo { background: #a855f722; color: #a855f7; border: 1px solid #a855f744; }
-    .tag-bible { background: #ffd20022; color: #ffd200; border: 1px solid #ffd20044; }
-    .card-arrow { font-size: 22px; color: #555; flex-shrink: 0; }
-    .game-card.typing { background: linear-gradient(135deg, #0d0d1a, #1a0a3e); border: 2px solid #6366f144; }
-    .card-title.typing { color: #a5b4fc; }
-    .tag-typing { background: #6366f122; color: #6366f1; border: 1px solid #6366f144; }
-
-    .footer { margin-top: 40px; font-size: 12px; color: #444; text-align: center; }
-    .footer span { color: #f7971e; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Nunito',sans-serif;min-height:100vh;background:#0a0a1a;display:flex;flex-direction:column;align-items:center;padding:16px 14px 40px;color:#fff;overflow-x:hidden}
+    /* NAV */
+    .music-btn{position:fixed;top:14px;right:16px;z-index:999;background:#1a1a3e;border:2px solid #6366f1;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,transform .1s;box-shadow:0 2px 10px rgba(0,0,0,.5)}
+    .music-btn.playing{border-color:#a855f7;animation:mPulse 1.5s ease-in-out infinite}
+    @keyframes mPulse{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,.4)}50%{box-shadow:0 0 0 8px rgba(168,85,247,0)}}
+    .home-btn{position:fixed;top:14px;left:16px;z-index:999;background:#1a1a3e;border:2px solid #6366f1;border-radius:20px;padding:8px 14px;font-size:13px;font-weight:700;color:#a5b4fc;cursor:pointer;text-decoration:none;font-family:'Nunito',sans-serif}
+    /* TITLE */
+    .title{font-family:'Fredoka One',cursive;font-size:38px;letter-spacing:2px;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin:8px 0 2px}
+    .subtitle{font-size:12px;color:#555;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px;text-align:center}
+    /* SCREENS */
+    .screen{width:100%;max-width:420px;display:none;flex-direction:column;align-items:center;gap:14px}
+    .screen.active{display:flex}
+    /* BUTTONS */
+    .btn{font-family:'Fredoka One',cursive;font-size:18px;letter-spacing:1px;padding:12px 28px;border:none;border-radius:50px;cursor:pointer;transition:transform .1s,box-shadow .1s;box-shadow:0 4px 15px rgba(0,0,0,.4)}
+    .btn:active{transform:scale(.96)}
+    .btn-purple{background:linear-gradient(135deg,#6366f1,#a855f7);color:#fff}
+    .btn-dark{background:#1a1a3e;border:2px solid #6366f1;color:#a5b4fc;font-size:14px;padding:10px 22px}
+    .btn-gold{background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a0e00}
+    .btn-sm{font-size:14px;padding:9px 20px}
+    /* PLAYER CARDS */
+    .p-cards{width:100%;display:flex;flex-direction:column;gap:12px}
+    .p-card{background:#1a1a3e;border:2px solid #2a2a6e;border-radius:18px;padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:border-color .2s,background .2s}
+    .p-card:hover{border-color:#a855f7;background:#1e1e4e}
+    .p-avatar{font-size:40px;flex-shrink:0}
+    .p-name{font-family:'Fredoka One',cursive;font-size:22px;color:#e0d0ff}
+    .p-sub{font-size:12px;color:#666;margin-top:2px}
+    .p-stats{font-size:11px;color:#a855f7;font-weight:700;margin-top:4px}
+    /* MODE CARDS */
+    .mode-cards{width:100%;display:flex;flex-direction:column;gap:12px}
+    .mode-card{background:#1a1a3e;border:2px solid #2a2a6e;border-radius:18px;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:border-color .2s,background .2s}
+    .mode-card:hover{border-color:#a855f7;background:#1e1e4e}
+    .mode-icon{font-size:42px;flex-shrink:0}
+    .mode-title{font-family:'Fredoka One',cursive;font-size:22px;color:#e0d0ff}
+    .mode-desc{font-size:13px;color:#888;margin-top:3px;line-height:1.4}
+    /* STAGE SELECT */
+    .stages-wrap{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .stage-card{background:#1a1a3e;border:2px solid #2a2a6e;border-radius:14px;padding:12px;cursor:pointer;text-align:center;transition:border-color .2s,background .2s}
+    .stage-card.unlocked:hover{border-color:#a855f7;background:#1e1e4e}
+    .stage-card.locked{opacity:.4;cursor:not-allowed}
+    .stage-card.current{border-color:#ffd200}
+    .stage-icon{font-size:28px;margin-bottom:4px}
+    .stage-name{font-family:'Fredoka One',cursive;font-size:15px;color:#e0d0ff}
+    .stage-best{font-size:11px;color:#a855f7;margin-top:3px}
+    .stage-lock{font-size:18px;margin-top:2px}
+    /* QUICK PLAY SCREEN */
+    .qp-header{width:100%;display:flex;justify-content:space-between;align-items:center;background:#1a1a3e;border:2px solid #2a2a6e;border-radius:14px;padding:10px 14px}
+    .qp-stat{text-align:center}
+    .qp-stat-label{font-size:10px;color:#555;text-transform:uppercase}
+    .qp-stat-val{font-family:'Fredoka One',cursive;font-size:22px;color:#ffd200}
+    .lives-row{display:flex;gap:4px;justify-content:center;font-size:18px}
+    .stage-pill{background:#1a1a3e;border:1px solid #a855f7;border-radius:20px;padding:4px 14px;font-size:12px;color:#a855f7;font-weight:700}
+    /* FALLING AREA */
+    .fall-area{width:100%;max-width:420px;height:340px;background:#0d0d1a;border:2px solid #1a1a3e;border-radius:16px;position:relative;overflow:hidden}
+    .falling-word{position:absolute;font-family:'Fredoka One',cursive;font-size:18px;color:#e0d0ff;background:#1a1a3e;border:2px solid #2a2a6e;border-radius:10px;padding:5px 12px;white-space:nowrap;cursor:default;transition:border-color .1s;user-select:none}
+    .falling-word.active{border-color:#a855f7;color:#fff}
+    .falling-word.correct{border-color:#4ade80;color:#4ade80;animation:wordPop .3s ease}
+    .falling-word.missed{border-color:#f87171;color:#f87171;animation:wordShake .3s ease}
+    @keyframes wordPop{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1);opacity:0}}
+    @keyframes wordShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    /* INPUT */
+    .type-input-wrap{width:100%;position:relative}
+    .type-input{width:100%;background:#1a1a3e;border:2px solid #6366f1;border-radius:14px;padding:14px 50px 14px 18px;color:#fff;font-family:'Fredoka One',cursive;font-size:22px;outline:none;letter-spacing:2px;text-transform:uppercase}
+    .type-input:focus{border-color:#a855f7}
+    .type-input-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:22px;color:#555}
+    .type-hint{font-size:13px;color:#555;text-align:center}
+    /* STORY MODE */
+    .story-header{width:100%;background:#1a1a3e;border:2px solid #2a2a6e;border-radius:14px;padding:12px 16px;text-align:center}
+    .story-chapter{font-size:11px;color:#6366f1;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+    .story-title-text{font-family:'Fredoka One',cursive;font-size:22px;color:#e0d0ff;margin:2px 0}
+    .story-scene-label{font-size:12px;color:#888}
+    .story-visual{width:100%;background:#0d0d1a;border:2px solid #1a1a3e;border-radius:16px;padding:16px;text-align:center;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+    .story-emoji-row{font-size:36px;letter-spacing:8px;min-height:44px}
+    .story-narrative{font-size:13px;color:#a5b4fc;line-height:1.6;text-align:center;min-height:40px}
+    .story-word-target{background:#1a1a3e;border:2px solid #6366f1;border-radius:12px;padding:10px 20px;text-align:center}
+    .story-word-label{font-size:11px;color:#555;text-transform:uppercase;margin-bottom:3px}
+    .story-word-display{font-family:'Fredoka One',cursive;font-size:28px;color:#e0d0ff;letter-spacing:4px}
+    .story-word-typed{color:#a855f7}
+    .story-word-cursor{color:#ffd200;animation:blink .7s step-end infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    .story-progress-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+    .story-pip{width:28px;height:28px;border-radius:50%;background:#1a1a3e;border:2px solid #2a2a6e;display:flex;align-items:center;justify-content:center;font-size:12px;transition:background .3s,border-color .3s}
+    .story-pip.done{background:#4ade80;border-color:#4ade80;color:#0d2b0d}
+    .story-pip.active{background:#a855f7;border-color:#a855f7;color:#fff}
+    .story-verse-box{background:#1a1a3e;border-left:4px solid #ffd200;border-radius:0 12px 12px 0;padding:12px 16px;font-size:13px;color:#ffd200;font-style:italic;width:100%;display:none}
+    .story-verse-box.show{display:block}
+    /* RESULTS */
+    .result-box{width:100%;background:#1a1a3e;border:2px solid #a855f7;border-radius:18px;padding:20px;text-align:center}
+    .result-icon{font-size:60px;margin-bottom:6px;animation:resultPop .5s ease}
+    @keyframes resultPop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+    .result-title{font-family:'Fredoka One',cursive;font-size:28px;color:#ffd200;margin-bottom:6px}
+    .result-stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+    .result-stat{background:#0d0d1a;border-radius:12px;padding:8px 14px;text-align:center}
+    .result-stat-val{font-family:'Fredoka One',cursive;font-size:24px;color:#a855f7}
+    .result-stat-label{font-size:11px;color:#666;text-transform:uppercase}
+    .result-verse{background:#0d0d1a;border-left:4px solid #ffd200;border-radius:0 10px 10px 0;padding:10px 14px;font-size:13px;color:#ffd200;font-style:italic;margin-top:10px;text-align:left}
+    .stars-row{font-size:32px;letter-spacing:6px;margin:6px 0}
+    .action-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    /* STORY SELECT */
+    .story-grid{width:100%;display:flex;flex-direction:column;gap:10px}
+    .story-tile{background:#1a1a3e;border:2px solid #2a2a6e;border-radius:14px;padding:13px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .2s,background .2s}
+    .story-tile.unlocked:hover{border-color:#a855f7;background:#1e1e4e}
+    .story-tile.locked{opacity:.4;cursor:not-allowed}
+    .story-tile.completed{border-color:#4ade8044}
+    .story-tile-icon{font-size:30px;flex-shrink:0}
+    .story-tile-title{font-family:'Fredoka One',cursive;font-size:17px;color:#e0d0ff}
+    .story-tile-sub{font-size:12px;color:#666;margin-top:2px}
+    .story-tile-badge{font-size:20px;flex-shrink:0;margin-left:auto}
+    /* AUDIO INDICATOR */
+    .audio-indicator{background:#1a1a3e;border:1px solid #4ade80;border-radius:20px;padding:4px 12px;font-size:12px;color:#4ade80;display:none}
+    .audio-indicator.show{display:inline-block;animation:fadeIn .3s ease}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   </style>
 </head>
 <body>
-  <div class="crown">👑</div>
-  <div class="title">Kingdom Kids</div>
-  <div class="subtitle">Games for Dominion &amp; Anu</div>
+<a class="home-btn" href="../index.html">👑 Hub</a>
+<button class="music-btn playing" id="music-btn" onclick="toggleMusic()">🎵</button>
 
-  <div class="cards">
-    <a class="game-card xo" href="xo-game/index.html">
-      <div class="card-icon">✕○</div>
-      <div class="card-info">
-        <div class="card-title xo">X &amp; O</div>
-        <div class="card-desc">Play together! Coin flip decides who goes first.</div>
-        <span class="card-tag tag-xo">2 Players · Learn Mode</span>
-      </div>
-      <div class="card-arrow">▶</div>
-    </a>
+<div class="title">⌨️ Kingdom Typer</div>
+<div class="subtitle">Dominion &amp; Anu · Type &amp; Learn</div>
 
-    <a class="game-card solo" href="solo-game/index.html">
-      <div class="card-icon">🤖</div>
-      <div class="card-info">
-        <div class="card-title solo">Solo Challenge</div>
-        <div class="card-desc">Beat Robot Rex through 4 stages — Baby to Beast!</div>
-        <span class="card-tag tag-solo">Solo · 4 Stages · Unlock System</span>
-      </div>
-      <div class="card-arrow">▶</div>
-    </a>
-
-    <a class="game-card bible" href="bible-games/index.html">
-      <div class="card-icon">✝️</div>
-      <div class="card-info">
-        <div class="card-title bible">Kingdom Kids Bible</div>
-        <div class="card-desc">Quiz, verses, word search, stories & character match!</div>
-        <span class="card-tag tag-bible">5 Games · Solo &amp; Family</span>
-      </div>
-      <div class="card-arrow">▶</div>
-    </a>
-    <a class="game-card typing" href="typing/index.html">
-      <div class="card-icon">⌨️</div>
-      <div class="card-info">
-        <div class="card-title typing">Kingdom Typer</div>
-        <div class="card-desc">Type falling words through 10 stages + 11 deep Bible stories!</div>
-        <span class="card-tag tag-typing">Solo · 10 Stages · Story Mode · Audio for Anu</span>
-      </div>
-      <div class="card-arrow">▶</div>
-    </a>
-
+<!-- SCREEN: Player Select -->
+<div class="screen active" id="screen-player">
+  <div style="font-size:15px;color:#555;text-align:center">Who is typing today? ⌨️</div>
+  <div class="p-cards">
+    <div class="p-card" onclick="selectPlayer('dominion')">
+      <div class="p-avatar">🏆</div>
+      <div><div class="p-name">Dominion</div><div class="p-sub">Age 7 · Rising Champion</div><div class="p-stats" id="dom-stats">Loading...</div></div>
+    </div>
+    <div class="p-card" onclick="selectPlayer('anu')">
+      <div class="p-avatar">⭐</div>
+      <div><div class="p-name">Anu</div><div class="p-sub">Age 5 · Rising Champion</div><div class="p-stats" id="anu-stats">Loading...</div></div>
+    </div>
   </div>
+</div>
 
-  <div class="footer">Made with ❤️ for <span>Dominion &amp; Anu</span></div>
+<!-- SCREEN: Mode Select -->
+<div class="screen" id="screen-mode">
+  <div style="font-size:15px;color:#555;text-align:center" id="mode-welcome">Choose your mode!</div>
+  <div class="mode-cards">
+    <div class="mode-card" onclick="goToQuickPlay()">
+      <div class="mode-icon">⚡</div>
+      <div><div class="mode-title">Quick Play</div><div class="mode-desc">Words fall from the sky — type them before they land! 10 stages of challenge.</div></div>
+    </div>
+    <div class="mode-card" onclick="goToStorySelect()">
+      <div class="mode-icon">📖</div>
+      <div><div class="mode-title">Story Mode</div><div class="mode-desc">Type your way through 11 epic Bible stories. Unlock each one as you go!</div></div>
+    </div>
+  </div>
+  <button class="btn btn-dark" onclick="showScreen('screen-player')">← Change Player</button>
+</div>
+
+<!-- SCREEN: Stage Select -->
+<div class="screen" id="screen-stages">
+  <div style="font-size:15px;color:#555;text-align:center">Choose your stage!</div>
+  <div class="stages-wrap" id="stages-wrap"></div>
+  <button class="btn btn-dark" onclick="showScreen('screen-mode')">← Back</button>
+</div>
+
+<!-- SCREEN: Quick Play -->
+<div class="screen" id="screen-qp">
+  <div class="qp-header">
+    <div class="qp-stat"><div class="qp-stat-label">Score</div><div class="qp-stat-val" id="qp-score">0</div></div>
+    <div class="qp-stat"><div class="qp-stat-label">Lives</div><div class="lives-row" id="qp-lives">❤️❤️❤️</div></div>
+    <div class="qp-stat"><div class="qp-stat-label">Time</div><div class="qp-stat-val" id="qp-timer">60</div></div>
+    <div class="qp-stat"><div class="qp-stat-label">WPM</div><div class="qp-stat-val" id="qp-wpm">0</div></div>
+  </div>
+  <div class="stage-pill" id="qp-stage-pill">🌱 Stage 1 — Seedling</div>
+  <div class="fall-area" id="fall-area"></div>
+  <div class="type-input-wrap">
+    <input class="type-input" id="type-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="TYPE HERE..." />
+    <span class="type-input-icon">⌨️</span>
+  </div>
+  <div class="audio-indicator" id="audio-indicator">🔊 Listening...</div>
+  <div class="type-hint" id="qp-hint">Type the glowing word and press Space or Enter!</div>
+  <div class="action-row">
+    <button class="btn btn-dark btn-sm" onclick="pauseQP()" id="pause-btn">⏸ Pause</button>
+    <button class="btn btn-dark btn-sm" onclick="goToStages()">📋 Stages</button>
+  </div>
+</div>
+
+<!-- SCREEN: Story Select -->
+<div class="screen" id="screen-story-select">
+  <div style="font-size:15px;color:#555;text-align:center">Choose a Bible story! 📖</div>
+  <div class="story-grid" id="story-grid"></div>
+  <button class="btn btn-dark" onclick="showScreen('screen-mode')">← Back</button>
+</div>
+
+<!-- SCREEN: Story Play -->
+<div class="screen" id="screen-story">
+  <div class="story-header">
+    <div class="story-chapter" id="story-chapter">Story 1 of 11</div>
+    <div class="story-title-text" id="story-title">Genesis — War in Heaven</div>
+    <div class="story-scene-label" id="story-scene-label">Scene 1 of 3 · Word 1 of 10</div>
+  </div>
+  <div class="story-visual">
+    <div class="story-emoji-row" id="story-emojis">✨</div>
+    <div class="story-narrative" id="story-narrative">Loading story...</div>
+  </div>
+  <div class="story-word-target">
+    <div class="story-word-label">Type this word</div>
+    <div class="story-word-display" id="story-word-display">WORD</div>
+  </div>
+  <div class="story-progress-row" id="story-progress-row"></div>
+  <div class="type-input-wrap">
+    <input class="type-input" id="story-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="TYPE HERE..." />
+    <span class="type-input-icon">⌨️</span>
+  </div>
+  <div class="audio-indicator" id="story-audio-indicator">🔊 Word spoken!</div>
+  <div class="story-verse-box" id="story-verse-box"></div>
+  <div class="action-row">
+    <button class="btn btn-dark btn-sm" onclick="goToStorySelect()">📖 Stories</button>
+    <button class="btn btn-dark btn-sm" onclick="showScreen('screen-mode')">🏠 Mode</button>
+  </div>
+</div>
+
+<!-- SCREEN: Result -->
+<div class="screen" id="screen-result">
+  <div class="result-box">
+    <div class="result-icon" id="result-icon">🏆</div>
+    <div class="stars-row" id="result-stars">⭐⭐⭐</div>
+    <div class="result-title" id="result-title">Amazing!</div>
+    <div class="result-stats" id="result-stats"></div>
+    <div class="result-verse" id="result-verse"></div>
+  </div>
+  <div class="action-row">
+    <button class="btn btn-purple" id="result-play-again" onclick="playAgain()">▶ Play Again</button>
+    <button class="btn btn-dark btn-sm" onclick="showScreen('screen-mode')">🏠 Mode</button>
+    <button class="btn btn-dark btn-sm" onclick="showScreen('screen-player')">👤 Players</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════
+const STAGES = [
+  {id:0,name:'Seedling',icon:'🌱',time:60,speed:38,lives:5,minLen:3,maxLen:4},
+  {id:1,name:'Growing',icon:'🌿',time:60,speed:34,lives:5,minLen:3,maxLen:4},
+  {id:2,name:'Shining',icon:'⭐',time:55,speed:30,lives:4,minLen:4,maxLen:5},
+  {id:3,name:'Burning',icon:'🔥',time:55,speed:27,lives:4,minLen:4,maxLen:5},
+  {id:4,name:'Warrior',icon:'🏹',time:50,speed:24,lives:3,minLen:5,maxLen:6},
+  {id:5,name:'Courageous',icon:'🦁',time:50,speed:21,lives:3,minLen:5,maxLen:7},
+  {id:6,name:'Crowned',icon:'👑',time:45,speed:18,lives:3,minLen:6,maxLen:7},
+  {id:7,name:'Mighty',icon:'🌊',time:45,speed:15,lives:3,minLen:6,maxLen:8},
+  {id:8,name:'Thunder',icon:'⚡',time:40,speed:12,lives:2,minLen:7,maxLen:9},
+  {id:9,name:'Champion',icon:'🏆',time:40,speed:9,lives:2,minLen:7,maxLen:15},
+];
+
+const WORD_POOL = {
+  anu: ['GOD','ARK','SUN','SKY','SEA','DAY','EAR','EYE','ARM','LAW','JOY','RUN','FLY','CRY','WIN','BOW','CUP','WAY','KEY','OLD','NEW','RED','MAP','NET','ROD','OAK','DEN','PIT','RAM','EVE','HAM','LOT','NUN','SIN','TEN','TWO','SIX','ONE','ACE','AGE','AIR','AXE','BEE','DIG','EGG','FIG','GEM','HEN','INN','JAR','KID','LEG','MAN','OAR','PEA','RAT','SAP','TIN','URN','VAT','WAX','YAM','ZAP','LOVE','PRAY','KING','LAMB','DOVE','ROSE','LION','FISH','FIRE','RAIN','STAR','GIFT','HOPE','FEAR','GOOD','FOOD','HOLY','WORD','LORD','SOUL','SEED','VINE','WINE','PALM','REED','GOLD','SALT','SAND','WELL','TENT','GATE','WALL','BIRD','BOAT','ROAD','SONG','LIFE','TREE','BOOK','HARP','POOL','HORN','ROBE','CORD','HEEL','HEEL'],
+  dominion: ['NOAH','ADAM','ABEL','CAIN','RUTH','PAUL','MARY','JOHN','MARK','LUKE','PRAY','HOLY','LORD','SOUL','LOVE','FAITH','GRACE','PEACE','TRUTH','LIGHT','STONE','SWORD','ANGEL','BREAD','BLOOD','CROSS','RISEN','MERCY','POWER','GLORY','MOSES','DAVID','ESTHER','JOSEPH','DANIEL','ELIJAH','ISAIAH','JOSHUA','CANAAN','JORDAN','JERICHO','BETHLEHEM','JERUSALEM','COVENANT','PROPHET','MIRACLE','FORGIVE','BLESSED','KINGDOM','TABERNACLE','SACRIFICE','RIGHTEOUS','SALVATION','TESTIMONY','RESURRECTION','REVELATION','COMMANDMENT','RIGHTEOUSNESS','NEBUCHADNEZZAR','TRANSFIGURATION','ABOMINATION','SANCTIFICATION','JUSTIFICATION','RECONCILIATION','PREDESTINATION','CIRCUMCISION','CONGREGATION','DISPENSATION','MANIFESTATION','PROCLAMATION','SUPPLICATION','THANKSGIVING','TRIBULATION','ILLUMINATION','CONSECRATION','INTERCESSION','REGENERATION','SANCTIFICATION','GLORIFICATION','JUSTIFICATION'],
+};
+
+const STORIES = [
+  {
+    id:0, icon:'🌌', title:'War in Heaven', subtitle:'Genesis · The Beginning',
+    scenes:[
+      {emojis:'👼✨🌟',narrative:'Before creation, God\'s most beautiful angel was Lucifer — the Morning Star. He was filled with wisdom and covered in light. But pride entered his heart. He said "I will be like the Most High!" He gathered one third of the angels to rebel against God.',
+       anuWords:['ANGEL','STAR','LIGHT','PRIDE','FALL'],
+       domWords:['LUCIFER','HEAVEN','PRIDE','REBEL','MORNING','ANGEL','WORSHIP','CREATED','WISDOM','BEAUTY']},
+      {emojis:'⚔️🔥💥',narrative:'War broke out in heaven! Michael the archangel led God\'s holy angels against Lucifer and his army. The battle was fierce but the outcome was certain. God\'s power cannot be challenged. Lucifer and his angels were cast out of heaven like lightning.',
+       anuWords:['WAR','FIRE','CAST','DOWN','FELL'],
+       domWords:['MICHAEL','BATTLE','ARCHANGEL','CASTING','DEFEATED','THUNDER','EXPELLED','KINGDOM','WARFARE','VICTORY']},
+      {emojis:'🐍🌍😔',narrative:'Cast to the earth, Lucifer became the adversary — the one who opposes God. He disguised himself as a serpent. But God already had a plan — one day a Saviour would come to crush the serpent\'s head and restore everything that was lost.',
+       anuWords:['SNAKE','EARTH','PLAN','SAVE','HOPE'],
+       domWords:['ADVERSARY','SERPENT','DECEIVER','DEFEATED','PROPHECY','SAVIOUR','PROMISED','RESTORED','CRUSHED','REDEEMED'],
+       verse:'"How you have fallen from heaven, morning star, son of the dawn!" — Isaiah 14:12'},
+    ]
+  },
+  {
+    id:1, icon:'🌍', title:'Creation & The Fall', subtitle:'Genesis 1-3',
+    scenes:[
+      {emojis:'🌑✨🌅',narrative:'In the beginning there was nothing — only God. Then God spoke and everything came into being! Day 1: Light. Day 2: Sky. Day 3: Land and plants. Day 4: Sun, moon and stars. Day 5: Fish and birds. Day 6: Animals and mankind. Day 7: God rested.',
+       anuWords:['GOOD','SUN','SKY','SEA','MAN'],
+       domWords:['CREATION','DARKNESS','HEAVENS','BREATHED','MANKIND','BLESSED','ANIMALS','FIRMAMENT','SEPARATED','DOMINION']},
+      {emojis:'🌺🍎🐍',narrative:'God placed Adam and Eve in the beautiful Garden of Eden. They could eat from any tree except one — the tree of the knowledge of good and evil. But the serpent came to Eve and twisted God\'s words. She ate the fruit. Adam ate too.',
+       anuWords:['TREE','FRUIT','EAT','EYES','HIDE'],
+       domWords:['PARADISE','KNOWLEDGE','FORBIDDEN','DECEPTION','DISOBEYED','TEMPTATION','SERPENT','NAKEDNESS','ASHAMED','TRANSGRESSED']},
+      {emojis:'👞🌿😢',narrative:'God called out "Where are you?" Adam and Eve hid in shame. God gave them consequences — pain, toil and death entered the world. But even in judgement God showed mercy. He clothed them with animal skins and promised that one day their Redeemer would come.',
+       anuWords:['COAT','PAIN','WORK','SEED','HOPE'],
+       domWords:['JUDGEMENT','CONSEQUENCE','EXPELLED','PROMISED','REDEEMER','CHERUBIM','COVENANT','MERCY','CURSED','GARMENTS'],
+       verse:'"And I will put enmity between you and the woman — her offspring will crush your head." — Genesis 3:15'},
+    ]
+  },
+  {
+    id:2, icon:'⚔️', title:'Cain & Abel', subtitle:'Genesis 4',
+    scenes:[
+      {emojis:'🌾🐑🙏',narrative:'Adam and Eve had two sons — Cain who worked the ground and Abel who kept sheep. Both brought offerings to God. Abel brought the best of his flock with a sincere heart. God was pleased with Abel\'s offering but Cain\'s heart was not right.',
+       anuWords:['SONS','LAMB','GIFT','FARM','CROP'],
+       domWords:['OFFERING','FIRSTBORN','ACCEPTED','REJECTED','SINCERE','SHEPHERD','FIRSTFRUITS','ATTITUDE','WORSHIP','PLEASING']},
+      {emojis:'😠💔😢',narrative:'Cain was furious. God warned him: "Sin is crouching at your door — but you must master it." Cain would not listen. He invited his brother Abel to the field. There, consumed by jealousy, Cain rose up and killed his brother Abel.',
+       anuWords:['ANGRY','DOOR','FIELD','KILL','BLOOD'],
+       domWords:['JEALOUSY','WARNING','CROUCHING','MASTERED','MURDERED','INNOCENT','CONSUMED','VIOLENCE','BROTHERS','CONSEQUENCES']},
+      {emojis:'🌍😔🔵',narrative:'God asked "Where is your brother Abel?" Cain said "Am I my brother\'s keeper?" But God said Abel\'s blood cried out from the ground. Cain was cursed to wander the earth. Yet God put a mark on Cain to protect him — even in judgement God shows mercy.',
+       anuWords:['MARK','WANDER','LAND','MERCY','KEPT'],
+       domWords:['WANDERING','CONDEMNED','PROTECTED','COVENANT','BANISHED','GUARDIAN','DECLARED','JUSTICE','SHELTERED','FOREKNOWN'],
+       verse:'"Am I my brother\'s keeper?" — Genesis 4:9'},
+    ]
+  },
+  {
+    id:3, icon:'🚢', title:'Noah & The Flood', subtitle:'Genesis 6-9',
+    scenes:[
+      {emojis:'🌧️🔨🚢',narrative:'The earth was filled with wickedness and God\'s heart was grieved. But Noah found grace in the eyes of the Lord — he was righteous in his generation. God told Noah to build an enormous Ark of gopher wood. Noah obeyed without question.',
+       anuWords:['RAIN','BOAT','WOOD','BUILD','PAIR'],
+       domWords:['WICKEDNESS','RIGHTEOUS','COVENANT','CUBIT','OBEDIENT','GOPHER','INSTRUCTIONS','GRIEVED','CORRUPTION','DIMENSIONS']},
+      {emojis:'🦁🐘🕊️',narrative:'Noah gathered two of every kind of animal — male and female. His family of eight entered the Ark. Then God shut the door. Rain fell for forty days and forty nights. The waters rose and covered even the highest mountains. Every living thing outside perished.',
+       anuWords:['PAIR','DOOR','DAYS','RISE','FELL'],
+       domWords:['GATHERED','FOURTEEN','CATEGORIES','FOUNTAINS','MOUNTAINS','PERISHED','SUBMERGED','RECEDED','CATASTROPHIC','PROVISIONS']},
+      {emojis:'🌈☀️🕊️',narrative:'After 150 days the waters receded. The Ark rested on Mount Ararat. Noah sent out a dove which returned with an olive leaf. They left the Ark! Noah built an altar and worshipped God. God set His rainbow in the sky as an everlasting covenant promise.',
+       anuWords:['DOVE','LEAF','LAND','SIGN','BOW'],
+       domWords:['RECEDED','COVENANT','EVERLASTING','RAINBOW','SACRIFICE','PROMISE','WORSHIP','ARARAT','OLIVE','RELEASED'],
+       verse:'"I have set my rainbow in the clouds as a sign of the covenant." — Genesis 9:13'},
+    ]
+  },
+  {
+    id:4, icon:'🌟', title:'Abraham & Isaac', subtitle:'Genesis 12-22',
+    scenes:[
+      {emojis:'🌟👴🗺️',narrative:'God called Abram saying "Leave your country and go to the land I will show you." God promised to make him a great nation and bless all families of the earth through him. Abram obeyed by faith — he left without knowing where he was going!',
+       anuWords:['CALL','LAND','STAR','BLESS','WALK'],
+       domWords:['COVENANT','PROMISED','NATION','BLESSING','FAITHFUL','JOURNEYED','BELIEVING','SEPARATED','ABIDING','OBEDIENT']},
+      {emojis:'👶🌙😂',narrative:'Abraham was 100 years old and Sarah was 90 — yet God promised them a son. Sarah laughed at the thought. But God said "Is anything too hard for the Lord?" The following year Isaac was born exactly as God promised. His name means "laughter"!',
+       anuWords:['SON','BORN','OLD','LAUGH','NAME'],
+       domWords:['MIRACULOUS','IMPOSSIBLE','FULFILLED','PROMISED','LAUGHTER','SUPERNATURAL','COVENANT','CONCEPTION','DESCENDANT','INHERITANCE']},
+      {emojis:'🔪🐏🙌',narrative:'God tested Abraham saying "Take your son Isaac and offer him as a sacrifice." Abraham obeyed in faith believing God could raise Isaac from the dead. At the last moment the Angel of the Lord stopped him. God provided a ram caught in the thicket instead.',
+       anuWords:['TEST','WOOD','FIRE','STOP','RAM'],
+       domWords:['PROVISION','SACRIFICE','OBEDIENCE','SUBSTITUTION','INTERCEDING','JEHOVAH-JIREH','RESURRECTION','FAITHFULNESS','BELIEVING','FORESHADOW'],
+       verse:'"Abraham called that place The LORD Will Provide." — Genesis 22:14'},
+    ]
+  },
+  {
+    id:5, icon:'🪜', title:'Jacob — The Wrestler', subtitle:'Genesis 25-32',
+    scenes:[
+      {emojis:'👶🔴🩱',narrative:'Isaac and Rebecca had twins — Esau came first then Jacob holding Esau\'s heel. God said "the older will serve the younger." Esau was a hunter loved by Isaac. Jacob was a quiet man loved by Rebecca. One day Esau sold his birthright to Jacob for a bowl of stew!',
+       anuWords:['TWIN','HEEL','HUNT','STEW','SELL'],
+       domWords:['BIRTHRIGHT','SUPPLANTER','DECEPTION','FIRSTBORN','BLESSING','REJECTED','COVENANT','INHERITANCE','DESPISED','PROMISED']},
+      {emojis:'🪜👼🌟',narrative:'Jacob fled from Esau\'s anger. On the way he lay down to sleep and had a remarkable dream — a ladder reaching from earth to heaven with angels ascending and descending. God stood above it and renewed the covenant promises made to Abraham and Isaac.',
+       anuWords:['SLEEP','DREAM','STEP','GATE','VOW'],
+       domWords:['BETHEL','COVENANT','ASCENDING','DESCENDING','RENEWED','PROMISED','PRESENCE','ANOINTED','PILLAR','SANCTUARY']},
+      {emojis:'💪👤🌅',narrative:'Years later Jacob was returning home afraid of Esau. That night a Man wrestled with him until dawn. Jacob would not let go saying "I will not let you go unless you bless me." The Man touched his hip and changed his name to Israel — one who struggles with God.',
+       anuWords:['GRIP','BLESS','HIP','DAWN','NAME'],
+       domWords:['WRESTLING','PREVAILED','PERSISTED','BLESSING','TRANSFORMED','PENIEL','ENCOUNTERED','SURRENDERED','COVENANT','LIMPING'],
+       verse:'"Your name will no longer be Jacob but Israel — you have struggled with God." — Genesis 32:28'},
+    ]
+  },
+  {
+    id:6, icon:'👑', title:'Joseph — The Dreamer', subtitle:'Genesis 37-50',
+    scenes:[
+      {emojis:'🌈🧥😢',narrative:'Jacob loved Joseph more than his other sons and gave him a beautiful coat of many colours. His brothers were filled with jealousy. Joseph also dreamed that his brothers\' sheaves bowed down to his and the sun and moon bowed to him. His brothers hated him for it.',
+       anuWords:['COAT','DREAM','HATE','SOLD','GONE'],
+       domWords:['JEALOUSY','TECHNICOLOUR','FAVOURITE','BETRAYAL','CONSPIRED','DREAMER','SHEAVES','STRIPPED','MERCHANTS','DECEPTION']},
+      {emojis:'⛓️🏛️📜',narrative:'Joseph was sold to Potiphar in Egypt. God was with him and he prospered. But Potiphar\'s wife falsely accused him and he was thrown in prison. Even in prison God\'s favour was on Joseph. He interpreted the dreams of Pharaoh\'s baker and cupbearer correctly.',
+       anuWords:['JAIL','DREAM','CUPS','BREAD','WAIT'],
+       domWords:['POTIPHAR','FALSELY','IMPRISONED','INTERPRETER','CUPBEARER','PROSPERITY','PATIENCE','FAVOURED','FORGOTTEN','ENDURANCE']},
+      {emojis:'🌾👑🙌',narrative:'Pharaoh had troubling dreams no one could interpret. The cupbearer remembered Joseph! Joseph interpreted that 7 years of plenty would be followed by 7 years of famine. Pharaoh made Joseph second in command over all Egypt. When his brothers came for food Joseph forgave them.',
+       anuWords:['KING','FOOD','YEARS','WEPT','HUG'],
+       domWords:['INTERPRETED','APPOINTED','PROVISION','FAMINE','FORGIVENESS','RECONCILED','SOVEREIGNTY','PRESERVED','RESTORATION','PURPOSEFUL'],
+       verse:'"You intended to harm me but God intended it for good." — Genesis 50:20'},
+    ]
+  },
+  {
+    id:7, icon:'🦁', title:'Daniel — Faithful Always', subtitle:'Daniel 1-6',
+    scenes:[
+      {emojis:'🏰📚🥗',narrative:'Daniel and his three friends — Shadrach, Meshach and Abednego — were taken captive to Babylon. The king wanted to train them in Babylonian ways. But Daniel resolved not to defile himself with the king\'s food. He asked for vegetables and water instead.',
+       anuWords:['FOOD','PRAY','PURE','TEST','WISE'],
+       domWords:['CAPTIVE','BABYLON','RESOLVED','DEFILED','VEGETABLES','DETERMINED','SUPERIOR','TRAINING','EXAMINED','OUTSTANDING']},
+      {emojis:'🔥👼💪',narrative:'King Nebuchadnezzar built a huge golden statue and demanded everyone bow to it. Shadrach Meshach and Abednego refused. They were thrown into the furnace heated seven times hotter than normal. But a fourth man appeared in the fire walking with them — and they came out unharmed!',
+       anuWords:['BOW','FIRE','SAFE','FREE','FOUR'],
+       domWords:['NEBUCHADNEZZAR','FURNACE','WORSHIPPING','UNHARMED','SUPERNATURAL','PRESENCE','DELIVERED','WITNESSES','SCORCHED','APPOINTED']},
+      {emojis:'🦁🙏😴',narrative:'Daniel prayed to God three times a day even when a law forbade it. Jealous officials had him thrown to the lions. But God shut the lions\' mouths all night. In the morning King Darius ran to the den. Daniel was alive! His accusers were thrown in instead.',
+       anuWords:['PRAY','LION','SAFE','KING','DAWN'],
+       domWords:['DARIUS','ACCUSERS','FAITHFUL','DECREED','DELIVERED','UNSCATHED','TESTIMONY','SOVEREIGN','MIRACULOUS','INTEGRITY'],
+       verse:'"My God sent his angel and shut the mouths of the lions." — Daniel 6:22'},
+    ]
+  },
+  {
+    id:8, icon:'👸', title:'Esther — For Such a Time', subtitle:'Esther 1-10',
+    scenes:[
+      {emojis:'👸💄🌹',narrative:'Esther was a young Jewish girl raised by her cousin Mordecai after her parents died. She was beautiful and kind. When King Ahasuerus sought a new queen, Esther was chosen from all the young women in the kingdom — though she kept her Jewish identity secret.',
+       anuWords:['QUEEN','HAIR','KIND','LOVE','ROSE'],
+       domWords:['AHASUERUS','MORDECAI','SELECTED','BEAUTIFUL','CONCEALED','IDENTITY','RIGHTEOUS','KINGDOM','COMPASSION','GUIDANCE']},
+      {emojis:'😈📜😰',narrative:'The evil Haman was furious that Mordecai would not bow to him. He convinced the king to issue a decree to destroy all Jews throughout the kingdom. When Mordecai told Esther, he said these powerful words: "Who knows whether you have not come to the kingdom for such a time as this?"',
+       anuWords:['BOW','LAW','FEAR','TIME','THIS'],
+       domWords:['HAMAN','DECREE','DESTRUCTION','GENOCIDE','PURPOSED','APPOINTED','MORDECAI','CONSPIRED','GALLOWS','PROVIDENTIAL']},
+      {emojis:'🙏💪👑',narrative:'Esther fasted and prayed for three days. Then she courageously went before the king uninvited — risking her life. The king extended his golden sceptre and spared her. Esther revealed Haman\'s plot. Haman was hanged on the very gallows he built for Mordecai. The Jews were saved!',
+       anuWords:['FAST','PRAY','BRAVE','SAVE','WIN'],
+       domWords:['COURAGEOUS','SCEPTRE','INTERCEDED','REVEALED','CONDEMNED','DELIVERED','SALVATION','REVERSED','CELEBRATED','PROVIDENTIAL'],
+       verse:'"Who knows whether you have not come to the kingdom for such a time as this?" — Esther 4:14'},
+    ]
+  },
+  {
+    id:9, icon:'💔', title:'Job — Faith Through Fire', subtitle:'Job 1-42',
+    scenes:[
+      {emojis:'👨‍🌾🏠✨',narrative:'Job was the greatest man of the East — blameless and upright. He had a large family, vast wealth and great health. God pointed Job out to the adversary as a man of perfect integrity. The adversary challenged God saying Job only loved God because of His blessings.',
+       anuWords:['GOOD','RICH','PURE','FARM','KIND'],
+       domWords:['BLAMELESS','INTEGRITY','UPRIGHT','ADVERSARY','CHALLENGED','RIGHTEOUS','PROSPEROUS','FAITHFUL','REVERENCE','CHARACTER']},
+      {emojis:'💨🔥😭',narrative:'In one terrible day Job lost his oxen, donkeys, sheep and camels to raiders and fire. Then his servants were killed. Then a great wind struck the house and all ten of his children died. Then Job himself was struck with painful sores from head to toe. Yet Job did not sin.',
+       anuWords:['LOST','WIND','FIRE','PAIN','SORE'],
+       domWords:['CATASTROPHE','SUFFERING','Afflicted','PATIENCE','PERSEVERED','RIGHTEOUS','ANGUISHED','TORMENTED','STEADFAST','REMAINED']},
+      {emojis:'🌅💎🙌',narrative:'Job cried out to God and God answered from a whirlwind. God spoke of His mighty creation — the stars the sea the morning. Job repented of his self-righteousness and prayed for his friends. God restored Job\'s fortunes — giving him twice as much as he had before!',
+       anuWords:['WIND','STARS','PRAY','BACK','TWICE'],
+       domWords:['WHIRLWIND','RESTORED','REPENTANCE','INTERCEDED','REDEEMED','SOVEREIGN','GLORIFIED','VINDICATED','PROSPERITY','UNDESERVED'],
+       verse:'"Though He slay me, yet will I trust in Him." — Job 13:15'},
+    ]
+  },
+  {
+    id:10, icon:'✝️', title:'Jesus — The Living Word', subtitle:'Luke · John · Revelation',
+    scenes:[
+      {emojis:'⭐👶🎁',narrative:'Before time began the Word was with God and the Word was God. Through Him all things were created. Then in the fullness of time God sent His Son born of a virgin named Mary in Bethlehem. Angels sang! Shepherds ran! Wise men followed a star bringing gold frankincense and myrrh.',
+       anuWords:['BORN','STAR','GIFT','SING','LOVE'],
+       domWords:['INCARNATION','BETHLEHEM','FULFILLED','PROPHECY','EMMANUEL','FIRSTBORN','ANNOUNCED','SHEPHERDS','FRANKINCENSE','MAGNIFICAT']},
+      {emojis:'🌊🍞👁️',narrative:'Jesus grew in wisdom and stature. He was baptised and the Spirit descended like a dove. He called twelve disciples. He healed the blind the lame and the lepers. He calmed storms. He walked on water. He fed five thousand with five loaves and two fish. He raised Lazarus from the dead!',
+       anuWords:['HEAL','WALK','RISE','FEED','CALM'],
+       domWords:['DISCIPLESHIP','MIRACULOUS','RESURRECTION','TRANSFIGURATION','COMPASSION','MINISTRY','AUTHORITY','PROCLAIMED','KINGDOM','SALVATION']},
+      {emojis:'✝️🌅🕊️',narrative:'Jesus was crucified on the cross taking the sins of the world upon Himself. On the third day He rose from the dead — conquering death forever! He appeared to over 500 people. Then He ascended into heaven. He sent the Holy Spirit. One day He will return as King of kings!',
+       anuWords:['CROSS','ROSE','LIVE','COME','KING'],
+       domWords:['CRUCIFIXION','ATONEMENT','RESURRECTION','ASCENSION','PENTECOST','GLORIFIED','INTERCEDING','RETURNING','TRIUMPHANT','REVELATION'],
+       verse:'"I am the resurrection and the life. Whoever believes in me will live even though they die." — John 11:25'},
+    ]
+  },
+];
+
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+let currentPlayer='dominion';
+let lastMode='quickplay';
+let currentStageId=0;
+let currentStoryId=0;
+
+// Quick Play state
+let qpWords=[],qpScore=0,qpLives=3,qpTimer=60,qpWPM=0;
+let qpRunning=false,qpPaused=false;
+let qpInterval=null,qpSpawnInterval=null,qpFallInterval=null;
+let qpWordsTyped=0,qpStartTime=0,qpCorrect=0,qpTotal=0;
+let activeWordId=null;
+let wordIdCounter=0;
+
+// Story state
+let storySceneIdx=0,storyWordIdx=0,storyScore=0;
+let storyWords=[],storyComplete=false;
+
+// ═══════════════════════════════════════════
+//  SAVE / LOAD
+// ═══════════════════════════════════════════
+function loadSave(player){
+  try{const r=localStorage.getItem('typer_'+player);return r?JSON.parse(r):{unlockedStage:0,unlockedStory:0,stages:[],stories:[]}}catch(e){return{unlockedStage:0,unlockedStory:0,stages:[],stories:[]}}
+}
+function saveSave(player,data){try{localStorage.setItem('typer_'+player,JSON.stringify(data))}catch(e){}}
+
+function updateStageProgress(player,stageId,wpm,accuracy,score){
+  const save=loadSave(player);
+  if(!save.stages[stageId]) save.stages[stageId]={bestWPM:0,bestAcc:0,bestScore:0,plays:0};
+  const s=save.stages[stageId];
+  s.plays=(s.plays||0)+1;
+  if(wpm>s.bestWPM) s.bestWPM=wpm;
+  if(accuracy>s.bestAcc) s.bestAcc=accuracy;
+  if(score>s.bestScore) s.bestScore=score;
+  if(score>50 && stageId>=save.unlockedStage && stageId<9) save.unlockedStage=stageId+1;
+  saveSave(player,save);
+}
+
+function updateStoryProgress(player,storyId){
+  const save=loadSave(player);
+  if(!save.stories[storyId]) save.stories[storyId]={completed:false};
+  save.stories[storyId].completed=true;
+  if(storyId>=save.unlockedStory && storyId<10) save.unlockedStory=storyId+1;
+  saveSave(player,save);
+}
+
+// ═══════════════════════════════════════════
+//  SCREENS
+// ═══════════════════════════════════════════
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='screen-player') refreshPlayerCards();
+}
+
+function refreshPlayerCards(){
+  ['dominion','anu'].forEach(p=>{
+    const save=loadSave(p);
+    const stage=STAGES[save.unlockedStage]||STAGES[0];
+    const el=document.getElementById(p==='dominion'?'dom-stats':'anu-stats');
+    const totalPlays=save.stages.reduce((a,s)=>a+(s?.plays||0),0);
+    const bestWPM=save.stages.reduce((a,s)=>Math.max(a,s?.bestWPM||0),0);
+    el.textContent=`Stage ${save.unlockedStage+1} unlocked · Best ${bestWPM} WPM · ${totalPlays} games played`;
+  });
+}
+
+function selectPlayer(player){
+  currentPlayer=player;
+  document.getElementById('mode-welcome').textContent='What are you playing, '+(player==='dominion'?'Dominion':'Anu')+'?';
+  showScreen('screen-mode');
+}
+
+// ═══════════════════════════════════════════
+//  STAGE SELECT
+// ═══════════════════════════════════════════
+function goToStages(){
+  stopQP();
+  const save=loadSave(currentPlayer);
+  const wrap=document.getElementById('stages-wrap');
+  wrap.innerHTML='';
+  STAGES.forEach((stage,i)=>{
+    const unlocked=i<=save.unlockedStage;
+    const isCurrent=i===save.unlockedStage;
+    const stats=save.stages[i]||{};
+    const div=document.createElement('div');
+    div.className='stage-card '+(unlocked?'unlocked':'locked')+(isCurrent?' current':'');
+    div.innerHTML=`<div class="stage-icon">${stage.icon}</div>
+      <div class="stage-name">${stage.name}</div>
+      <div class="stage-best">${unlocked&&stats.bestWPM?'Best: '+stats.bestWPM+' WPM':unlocked?'Not played yet':'🔒 Locked'}</div>
+      <div class="stage-lock">${unlocked?'▶':'🔒'}</div>`;
+    if(unlocked) div.onclick=()=>startQP(i);
+    wrap.appendChild(div);
+  });
+  showScreen('screen-stages');
+}
+
+function goToQuickPlay(){
+  lastMode='quickplay';
+  goToStages();
+}
+
+// ═══════════════════════════════════════════
+//  QUICK PLAY ENGINE
+// ═══════════════════════════════════════════
+function getWordPool(){
+  const pool=currentPlayer==='anu'?WORD_POOL.anu:WORD_POOL.dominion;
+  const stage=STAGES[currentStageId];
+  return pool.filter(w=>w.length>=stage.minLen&&w.length<=stage.maxLen);
+}
+
+function startQP(stageId){
+  currentStageId=stageId;
+  const stage=STAGES[stageId];
+  qpScore=0;qpLives=stage.lives;qpTimer=stage.time;
+  qpWordsTyped=0;qpCorrect=0;qpTotal=0;qpWPM=0;
+  qpRunning=true;qpPaused=false;
+  qpWords=[];activeWordId=null;wordIdCounter=0;
+  qpStartTime=Date.now();
+
+  document.getElementById('qp-score').textContent='0';
+  document.getElementById('qp-timer').textContent=stage.time;
+  document.getElementById('qp-wpm').textContent='0';
+  document.getElementById('qp-stage-pill').textContent=stage.icon+' Stage '+(stageId+1)+' — '+stage.name;
+  document.getElementById('type-input').value='';
+  document.getElementById('fall-area').innerHTML='';
+  document.getElementById('pause-btn').textContent='⏸ Pause';
+  updateLives();
+  showScreen('screen-qp');
+  setTimeout(()=>document.getElementById('type-input').focus(),300);
+
+  // Anu audio greeting
+  if(currentPlayer==='anu') speak('Let\'s type! Listen to each word before you type it!');
+
+  // Timer
+  qpInterval=setInterval(()=>{
+    if(qpPaused) return;
+    qpTimer--;
+    document.getElementById('qp-timer').textContent=qpTimer;
+    // WPM calc
+    const elapsed=(Date.now()-qpStartTime)/60000;
+    if(elapsed>0) qpWPM=Math.round(qpCorrect/elapsed);
+    document.getElementById('qp-wpm').textContent=qpWPM;
+    if(qpTimer<=0) endQP('time');
+  },1000);
+
+  // Spawn words
+  const spawnDelay=currentPlayer==='anu'?2800:2000;
+  spawnWord();
+  qpSpawnInterval=setInterval(()=>{if(!qpPaused&&qpRunning) spawnWord();},spawnDelay);
+
+  // Fall physics
+  qpFallInterval=setInterval(()=>{if(!qpPaused&&qpRunning) updateFall();},100);
+}
+
+function spawnWord(){
+  const pool=getWordPool();
+  if(!pool.length) return;
+  const word=pool[Math.floor(Math.random()*pool.length)];
+  const id=wordIdCounter++;
+  const area=document.getElementById('fall-area');
+  const areaW=area.offsetWidth;
+  const left=20+Math.floor(Math.random()*(areaW-120));
+
+  const el=document.createElement('div');
+  el.className='falling-word';
+  el.id='fw-'+id;
+  el.textContent=word;
+  el.dataset.word=word;
+  el.dataset.top=0;
+  el.dataset.id=id;
+  el.style.left=left+'px';
+  el.style.top='0px';
+  area.appendChild(el);
+
+  qpWords.push({id,word,el,top:0,missed:false});
+  qpTotal++;
+
+  // Speak word for Anu
+  if(currentPlayer==='anu'){
+    speak(word.toLowerCase());
+    showAudioIndicator('qp');
+  }
+
+  // Auto-highlight first/only active word
+  if(!activeWordId) setActiveWord(id);
+}
+
+function updateFall(){
+  const area=document.getElementById('fall-area');
+  const areaH=area.offsetHeight;
+  const stage=STAGES[currentStageId];
+  const pixelsPerTick=areaH/stage.speed;
+
+  qpWords.forEach(w=>{
+    if(w.missed) return;
+    w.top+=pixelsPerTick;
+    w.el.style.top=w.top+'px';
+    if(w.top>=areaH-40){
+      w.missed=true;
+      w.el.classList.add('missed');
+      setTimeout(()=>{if(w.el.parentNode) w.el.parentNode.removeChild(w.el);},300);
+      qpWords=qpWords.filter(x=>x.id!==w.id);
+      if(w.id===activeWordId){activeWordId=null; pickNextActive();}
+      loseLife();
+    }
+  });
+}
+
+function setActiveWord(id){
+  activeWordId=id;
+  document.querySelectorAll('.falling-word').forEach(el=>el.classList.remove('active'));
+  const w=qpWords.find(x=>x.id===id);
+  if(w&&w.el) w.el.classList.add('active');
+}
+
+function pickNextActive(){
+  if(qpWords.length>0) setActiveWord(qpWords[0].id);
+}
+
+function loseLife(){
+  qpLives--;
+  updateLives();
+  if(qpLives<=0) endQP('lives');
+}
+
+function updateLives(){
+  const hearts=['❤️','❤️','❤️','❤️','❤️'];
+  const stage=STAGES[currentStageId];
+  let html='';
+  for(let i=0;i<stage.lives;i++) html+=(i<qpLives?'❤️':'🖤');
+  document.getElementById('qp-lives').innerHTML=html;
+}
+
+// Input handler
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('type-input');
+  inp.addEventListener('input',handleQPInput);
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();checkQPWord();}});
+
+  const sInp=document.getElementById('story-input');
+  sInp.addEventListener('input',handleStoryInput);
+});
+
+function handleQPInput(e){
+  if(!qpRunning||qpPaused) return;
+  const val=e.target.value.toUpperCase().trim();
+  // Highlight letters as typed
+  const active=qpWords.find(w=>w.id===activeWordId);
+  if(active){
+    const word=active.word;
+    let html='';
+    for(let i=0;i<word.length;i++){
+      if(i<val.length){
+        html+=val[i]===word[i]?`<span style="color:#4ade80">${word[i]}</span>`:`<span style="color:#f87171">${word[i]}</span>`;
+      } else {
+        html+=word[i];
+      }
+    }
+    active.el.innerHTML=html;
+  }
+  if(val.length>0&&val===active?.word) checkQPWord();
+}
+
+function checkQPWord(){
+  const inp=document.getElementById('type-input');
+  const val=inp.value.toUpperCase().trim();
+  if(!val||!qpRunning||qpPaused) return;
+
+  const active=qpWords.find(w=>w.id===activeWordId);
+  if(!active) {inp.value='';return;}
+
+  if(val===active.word){
+    // Correct!
+    qpCorrect++;
+    const points=active.word.length*10;
+    qpScore+=points;
+    document.getElementById('qp-score').textContent=qpScore;
+    active.el.classList.add('correct');
+    playSound('correct');
+    if(currentPlayer==='anu') speak('Well done!');
+    setTimeout(()=>{if(active.el.parentNode) active.el.parentNode.removeChild(active.el);},300);
+    qpWords=qpWords.filter(w=>w.id!==activeWordId);
+    activeWordId=null;
+    pickNextActive();
+  } else {
+    playSound('wrong');
+    active.el.classList.add('wrong');
+    setTimeout(()=>active.el.classList.remove('wrong'),300);
+  }
+  inp.value='';
+}
+
+function pauseQP(){
+  if(!qpRunning) return;
+  qpPaused=!qpPaused;
+  document.getElementById('pause-btn').textContent=qpPaused?'▶ Resume':'⏸ Pause';
+  if(!qpPaused) document.getElementById('type-input').focus();
+}
+
+function stopQP(){
+  qpRunning=false;
+  clearInterval(qpInterval);
+  clearInterval(qpSpawnInterval);
+  clearInterval(qpFallInterval);
+  qpInterval=null;qpSpawnInterval=null;qpFallInterval=null;
+}
+
+function endQP(reason){
+  stopQP();
+  const elapsed=(Date.now()-qpStartTime)/60000;
+  const wpm=elapsed>0?Math.round(qpCorrect/elapsed):0;
+  const accuracy=qpTotal>0?Math.round((qpCorrect/qpTotal)*100):0;
+  updateStageProgress(currentPlayer,currentStageId,wpm,accuracy,qpScore);
+
+  const stage=STAGES[currentStageId];
+  const stars=qpScore>=200?3:qpScore>=100?2:1;
+  const save=loadSave(currentPlayer);
+  const justUnlocked=save.unlockedStage===currentStageId+1;
+
+  document.getElementById('result-icon').textContent=stars===3?'🏆':stars===2?'⭐':'👏';
+  document.getElementById('result-stars').textContent=stars===3?'⭐⭐⭐':stars===2?'⭐⭐':'⭐';
+  document.getElementById('result-title').textContent=reason==='time'?'Time\'s Up!':'Keep Practising!';
+  document.getElementById('result-stats').innerHTML=
+    `<div class="result-stat"><div class="result-stat-val">${qpScore}</div><div class="result-stat-label">Score</div></div>
+     <div class="result-stat"><div class="result-stat-val">${wpm}</div><div class="result-stat-label">WPM</div></div>
+     <div class="result-stat"><div class="result-stat-val">${accuracy}%</div><div class="result-stat-label">Accuracy</div></div>
+     <div class="result-stat"><div class="result-stat-val">${qpCorrect}</div><div class="result-stat-label">Words</div></div>`;
+  const verseEl=document.getElementById('result-verse');
+  if(justUnlocked&&currentStageId<9){
+    const next=STAGES[currentStageId+1];
+    verseEl.textContent='🔓 New stage unlocked: '+next.icon+' '+next.name+'!';
+    verseEl.style.display='block';
+    if(currentPlayer==='anu') speak('Amazing! You unlocked a new stage!');
+  } else {
+    verseEl.textContent='"I can do all things through Christ who strengthens me." — Philippians 4:13';
+    verseEl.style.display='block';
+  }
+  document.getElementById('result-play-again').onclick=()=>startQP(currentStageId);
+  showScreen('screen-result');
+}
+
+// ═══════════════════════════════════════════
+//  STORY MODE
+// ═══════════════════════════════════════════
+function goToStorySelect(){
+  lastMode='story';
+  stopQP();
+  const save=loadSave(currentPlayer);
+  const grid=document.getElementById('story-grid');
+  grid.innerHTML='';
+  STORIES.forEach((story,i)=>{
+    const unlocked=i<=save.unlockedStory;
+    const completed=save.stories&&save.stories[i]&&save.stories[i].completed;
+    const div=document.createElement('div');
+    div.className='story-tile '+(unlocked?'unlocked':'locked')+(completed?' completed':'');
+    div.innerHTML=`<div class="story-tile-icon">${story.icon}</div>
+      <div><div class="story-tile-title">${story.title}</div>
+      <div class="story-tile-sub">${story.subtitle}</div></div>
+      <div class="story-tile-badge">${completed?'✅':unlocked?'▶':'🔒'}</div>`;
+    if(unlocked) div.onclick=()=>startStory(i);
+    grid.appendChild(div);
+  });
+  showScreen('screen-story-select');
+}
+
+function startStory(storyId){
+  currentStoryId=storyId;
+  storySceneIdx=0;storyWordIdx=0;storyScore=0;storyComplete=false;
+  loadStoryScene();
+  showScreen('screen-story');
+  setTimeout(()=>document.getElementById('story-input').focus(),300);
+}
+
+function loadStoryScene(){
+  const story=STORIES[currentStoryId];
+  const scene=story.scenes[storySceneIdx];
+  storyWords=currentPlayer==='anu'?scene.anuWords:scene.domWords;
+  storyWordIdx=0;
+
+  document.getElementById('story-chapter').textContent='Story '+(currentStoryId+1)+' of '+STORIES.length;
+  document.getElementById('story-title').textContent=story.icon+' '+story.title;
+  document.getElementById('story-emojis').textContent=scene.emojis;
+  document.getElementById('story-narrative').textContent=scene.narrative;
+  document.getElementById('story-input').value='';
+  document.getElementById('story-verse-box').className='story-verse-box';
+
+  renderStoryProgress();
+  renderCurrentWord();
+  updateStorySceneLabel();
+
+  // Audio for Anu
+  if(currentPlayer==='anu'){
+    speak(scene.narrative.substring(0,100));
+  }
+}
+
+function renderCurrentWord(){
+  const word=storyWords[storyWordIdx]||'';
+  document.getElementById('story-word-display').innerHTML=
+    '<span class="story-word-cursor">|</span>'+word.split('').map(l=>`<span>${l}</span>`).join('');
+  if(currentPlayer==='anu'){
+    setTimeout(()=>speak(word.toLowerCase()),600);
+    const ind=document.getElementById('story-audio-indicator');
+    ind.className='audio-indicator show';
+    setTimeout(()=>ind.className='audio-indicator',2000);
+  }
+}
+
+function handleStoryInput(e){
+  const inp=e.target;
+  const val=inp.value.toUpperCase().trim();
+  const word=storyWords[storyWordIdx]||'';
+
+  // Live letter highlighting
+  let html='<span class="story-word-cursor">|</span>';
+  for(let i=0;i<word.length;i++){
+    if(i<val.length){
+      html+=`<span style="color:${val[i]===word[i]?'#4ade80':'#f87171'}">${word[i]}</span>`;
+    } else {
+      html+=`<span>${word[i]}</span>`;
+    }
+  }
+  document.getElementById('story-word-display').innerHTML=html;
+
+  if(val===word){
+    playSound('correct');
+    if(currentPlayer==='anu') speak('Wonderful!');
+    storyScore+=10;
+    inp.value='';
+
+    // Mark pip done
+    const pips=document.querySelectorAll('.story-pip');
+    if(pips[storyWordIdx]) pips[storyWordIdx].className='story-pip done';
+    pips[storyWordIdx].textContent='✓';
+
+    storyWordIdx++;
+
+    if(storyWordIdx>=storyWords.length){
+      // Scene complete
+      setTimeout(()=>{
+        if(storySceneIdx<STORIES[currentStoryId].scenes.length-1){
+          storySceneIdx++;
+          loadStoryScene();
+        } else {
+          // Story complete!
+          completeStory();
+        }
+      },600);
+    } else {
+      setTimeout(()=>{
+        renderCurrentWord();
+        updateStorySceneLabel();
+        if(pips[storyWordIdx]) pips[storyWordIdx].className='story-pip active';
+      },300);
+    }
+  }
+}
+
+function renderStoryProgress(){
+  const row=document.getElementById('story-progress-row');
+  row.innerHTML='';
+  storyWords.forEach((w,i)=>{
+    const pip=document.createElement('div');
+    pip.className='story-pip'+(i===0?' active':'');
+    pip.textContent=i===0?'1':i+1;
+    row.appendChild(pip);
+  });
+}
+
+function updateStorySceneLabel(){
+  const story=STORIES[currentStoryId];
+  document.getElementById('story-scene-label').textContent=
+    'Scene '+(storySceneIdx+1)+' of '+story.scenes.length+
+    ' · Word '+(storyWordIdx+1)+' of '+storyWords.length;
+}
+
+function completeStory(){
+  const story=STORIES[currentStoryId];
+  const lastScene=story.scenes[story.scenes.length-1];
+  if(lastScene.verse){
+    const vb=document.getElementById('story-verse-box');
+    vb.textContent=lastScene.verse;
+    vb.className='story-verse-box show';
+  }
+  updateStoryProgress(currentPlayer,currentStoryId);
+
+  if(currentPlayer==='anu') speak('You finished the story! Amazing!');
+  playSound('complete');
+
+  setTimeout(()=>{
+    const save=loadSave(currentPlayer);
+    const justUnlocked=save.unlockedStory===currentStoryId+1;
+    document.getElementById('result-icon').textContent='📖';
+    document.getElementById('result-stars').textContent='⭐⭐⭐';
+    document.getElementById('result-title').textContent='Story Complete!';
+    document.getElementById('result-stats').innerHTML=
+      `<div class="result-stat"><div class="result-stat-val">${storyScore}</div><div class="result-stat-label">Score</div></div>
+       <div class="result-stat"><div class="result-stat-val">${story.scenes.length*storyWords.length}</div><div class="result-stat-label">Words Typed</div></div>`;
+    const rv=document.getElementById('result-verse');
+    if(lastScene.verse){rv.textContent=lastScene.verse;rv.style.display='block';}
+    else rv.style.display='none';
+    if(justUnlocked&&currentStoryId<10){
+      const next=STORIES[currentStoryId+1];
+      rv.textContent='🔓 Unlocked: '+next.icon+' '+next.title+'! '+(lastScene.verse||'');
+      rv.style.display='block';
+    }
+    document.getElementById('result-play-again').onclick=()=>startStory(currentStoryId);
+    showScreen('screen-result');
+  },1500);
+}
+
+function playAgain(){ if(lastMode==='story') startStory(currentStoryId); else startQP(currentStageId); }
+
+// ═══════════════════════════════════════════
+//  AUDIO — Speech (Anu) + Sound FX
+// ═══════════════════════════════════════════
+let speechSynth=window.speechSynthesis;
+let femaleVoice=null;
+
+function initVoice(){
+  if(!speechSynth) return;
+  const setVoice=()=>{
+    const voices=speechSynth.getVoices();
+    femaleVoice=voices.find(v=>v.name.includes('Female')||v.name.includes('female')||v.name.includes('Samantha')||v.name.includes('Victoria')||v.name.includes('Karen')||v.name.includes('Moira')||v.name.includes('Tessa')||v.name.includes('Fiona')||v.name.includes('Google UK English Female')||v.name.includes('Google US English'))||voices[0]||null;
+  };
+  setVoice();
+  if(speechSynth.onvoiceschanged!==undefined) speechSynth.onvoiceschanged=setVoice;
+}
+
+function speak(text){
+  if(currentPlayer!=='anu'||!speechSynth) return;
+  speechSynth.cancel();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.rate=0.85;utt.pitch=1.1;utt.volume=1;
+  if(femaleVoice) utt.voice=femaleVoice;
+  speechSynth.speak(utt);
+}
+
+function showAudioIndicator(mode){
+  const id=mode==='qp'?'audio-indicator':'story-audio-indicator';
+  const el=document.getElementById(id);
+  el.className='audio-indicator show';
+  setTimeout(()=>el.className='audio-indicator',2000);
+}
+
+// Sound FX via Web Audio
+let sfxCtx=null;
+function initSFX(){sfxCtx=new(window.AudioContext||window.webkitAudioContext)();}
+
+function playSound(type){
+  if(!sfxCtx) return;
+  const o=sfxCtx.createOscillator();
+  const g=sfxCtx.createGain();
+  o.connect(g);g.connect(sfxCtx.destination);
+  if(type==='correct'){
+    o.frequency.setValueAtTime(523,sfxCtx.currentTime);
+    o.frequency.setValueAtTime(659,sfxCtx.currentTime+0.05);
+    o.frequency.setValueAtTime(784,sfxCtx.currentTime+0.1);
+    g.gain.setValueAtTime(0.15,sfxCtx.currentTime);
+    g.gain.linearRampToValueAtTime(0,sfxCtx.currentTime+0.2);
+    o.start();o.stop(sfxCtx.currentTime+0.2);
+  } else if(type==='wrong'){
+    o.frequency.setValueAtTime(200,sfxCtx.currentTime);
+    g.gain.setValueAtTime(0.1,sfxCtx.currentTime);
+    g.gain.linearRampToValueAtTime(0,sfxCtx.currentTime+0.15);
+    o.start();o.stop(sfxCtx.currentTime+0.15);
+  } else if(type==='complete'){
+    [523,659,784,1046].forEach((f,i)=>{
+      const oo=sfxCtx.createOscillator();
+      const gg=sfxCtx.createGain();
+      oo.connect(gg);gg.connect(sfxCtx.destination);
+      oo.frequency.value=f;
+      gg.gain.setValueAtTime(0.12,sfxCtx.currentTime+i*0.12);
+      gg.gain.linearRampToValueAtTime(0,sfxCtx.currentTime+i*0.12+0.2);
+      oo.start(sfxCtx.currentTime+i*0.12);
+      oo.stop(sfxCtx.currentTime+i*0.12+0.25);
+    });
+  }
+}
+
+// ═══════════════════════════════════════════
+//  BACKGROUND MUSIC — Epic typing feel
+// ═══════════════════════════════════════════
+let audioCtx=null,musicPlaying=false,musicNodes=[],musicScheduler=null,nextNoteTime=0,noteIndex=0;
+const MELODY=[
+  440,0,523,0,659,587,0,523,
+  494,0,587,0,698,659,0,587,
+  523,0,659,0,784,698,0,659,
+  587,523,0,494,523,0,440,0
+];
+const BASS=[
+  220,0,261,0,329,293,0,261,
+  247,0,293,0,349,329,0,293,
+  261,0,329,0,392,349,0,329,
+  293,261,0,247,261,0,220,0
+];
+const ND=0.16,LA=0.25;
+
+function initMusic(){if(audioCtx) return;audioCtx=new(window.AudioContext||window.webkitAudioContext)();}
+
+function playTone(f,st,dur,gv,type){
+  if(!f||!audioCtx) return;
+  const o=audioCtx.createOscillator();
+  const gn=audioCtx.createGain();
+  const m=audioCtx.createGain();
+  o.type=type||'square';o.frequency.setValueAtTime(f,st);
+  gn.gain.setValueAtTime(0,st);gn.gain.linearRampToValueAtTime(gv,st+0.02);
+  gn.gain.setValueAtTime(gv,st+dur*0.7);gn.gain.linearRampToValueAtTime(0,st+dur);
+  m.gain.value=0.10;o.connect(gn);gn.connect(m);m.connect(audioCtx.destination);
+  o.start(st);o.stop(st+dur+0.05);musicNodes.push(o);
+}
+
+function scheduleNotes(){
+  while(nextNoteTime<audioCtx.currentTime+LA){
+    const idx=noteIndex%MELODY.length;
+    playTone(MELODY[idx],nextNoteTime,ND*0.8,0.5,'square');
+    playTone(BASS[idx],nextNoteTime,ND*1.0,0.3,'triangle');
+    nextNoteTime+=ND;noteIndex++;
+  }
+}
+
+function startMusic(){
+  initMusic();initSFX();initVoice();
+  if(audioCtx.state==='suspended') audioCtx.resume();
+  if(sfxCtx&&sfxCtx.state==='suspended') sfxCtx.resume();
+  nextNoteTime=audioCtx.currentTime+0.05;noteIndex=0;musicPlaying=true;
+  musicScheduler=setInterval(scheduleNotes,50);
+  document.getElementById('music-btn').textContent='🎵';
+  document.getElementById('music-btn').classList.add('playing');
+}
+
+function stopMusic(){
+  musicPlaying=false;
+  if(musicScheduler){clearInterval(musicScheduler);musicScheduler=null;}
+  musicNodes.forEach(n=>{try{n.stop()}catch(e){}});musicNodes=[];
+  document.getElementById('music-btn').textContent='🔇';
+  document.getElementById('music-btn').classList.remove('playing');
+}
+
+function toggleMusic(){musicPlaying?stopMusic():startMusic();}
+function autoStart(){if(!musicPlaying) startMusic();}
+document.addEventListener('touchstart',autoStart,{once:true});
+document.addEventListener('click',autoStart,{once:true});
+
+// Init
+refreshPlayerCards();
+</script>
 </body>
 </html>
